@@ -20,14 +20,12 @@ public class ReservaLibro implements Serializable {
      * Constructor vacío.
      * Necesario para JSON, XML y serialización.
      */
-    public ReservaLibro() {
-    }
+    public ReservaLibro() {}
 
     /**
      * Constructor completo con validación de datos.
      */
-    public ReservaLibro(String tituloLibro, String nombreSolicitante,
-                        LocalDate fechaReserva, LocalDate fechaDevolucion) {
+    public ReservaLibro(String tituloLibro, String nombreSolicitante, LocalDate fechaReserva, LocalDate fechaDevolucion) {
         this.tituloLibro = tituloLibro;
         this.nombreSolicitante = nombreSolicitante;
         this.fechaReserva = fechaReserva;
