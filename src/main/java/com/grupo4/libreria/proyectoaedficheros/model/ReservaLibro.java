@@ -1,5 +1,11 @@
 package com.grupo4.libreria.proyectoaedficheros.model;
 
+import com.grupo4.libreria.proyectoaedficheros.util.LocalDateAdapter;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -7,25 +13,33 @@ import java.time.LocalDate;
  * Modelo que representa una reserva de un libro en la biblioteca.
  * Incluye validaciones de datos según los requisitos del proyecto.
  */
+@XmlRootElement(name = "reserva")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ReservaLibro implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String tituloLibro;
     private String nombreSolicitante;
+
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate fechaReserva;
+
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate fechaDevolucion;
 
     /**
      * Constructor vacío.
      * Necesario para JSON, XML y serialización.
      */
-    public ReservaLibro() {}
+    public ReservaLibro() {
+    }
 
     /**
      * Constructor completo con validación de datos.
      */
-    public ReservaLibro(String tituloLibro, String nombreSolicitante, LocalDate fechaReserva, LocalDate fechaDevolucion) {
+    public ReservaLibro(String tituloLibro, String nombreSolicitante,
+                        LocalDate fechaReserva, LocalDate fechaDevolucion) {
         this.tituloLibro = tituloLibro;
         this.nombreSolicitante = nombreSolicitante;
         this.fechaReserva = fechaReserva;

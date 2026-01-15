@@ -1,7 +1,6 @@
 package com.grupo4.libreria.proyectoaedficheros.dao;
 
 import com.grupo4.libreria.proyectoaedficheros.model.ReservaLibro;
-import com.grupo4.libreria.proyectoaedficheros.model.ReservaJson;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
