@@ -12,16 +12,41 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReservaCsvController {
 
   // ! Ruta del archivo CSV de reservas
-  private static final String RUTA_CSV = "ficheros\\ReservasCsv.csv";
+  private static final String RUTA_CSV = "C:\\Users\\isaac\\IdeaProjects\\ProyectoFicheros-AED\\src\\main\\java\\com\\grupo4\\libreria\\proyectoaedficheros\\ficheros\\ReservasCsv.csv";
 
   public static void main(String[] args) {
     // ? Espacio para pruebas
+    getAllReservas();
+
+    // ReservaCsv nuevaReserva = new ReservaCsv(
+    // "El resplandor",
+    // "Isaac Ibañez",
+    // LocalDate.of(2026, 2, 10),
+    // LocalDate.of(2026, 2, 24));
+
+    // addReserva(nuevaReserva);
+
+    // updateReserva("El resplandor",
+    // new ReservaCsv(
+    // "El resplandoraso",
+    // "Marco Ibañez",
+    // LocalDate.of(2026, 2, 10),
+    // LocalDate.of(2026, 2, 24)
+    // )
+    // );
+
+    // ! Por ahora borra por nombre,
+    // ! tengo que crear el delete por nombre de libro
+    // deleteReservaBySolicitante("Marco Ibañez");
+
     getAllReservas();
   }
 
@@ -82,7 +107,6 @@ public class ReservaCsvController {
     }
   }
 
-  
   // * Busca y devuelve una única reserva por el nombre del solicitante
   public static ReservaCsv getReservaBySolicitante(String nombre) {
     List<ReservaCsv> lista = obtenerListaReservas();

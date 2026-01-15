@@ -1,23 +1,48 @@
 package com.grupo4.libreria.proyectoaedficheros.dao;
 
-import com.grupo4.libreria.proyectoaedficheros.model.ReservaListWrapper;
 import com.grupo4.libreria.proyectoaedficheros.model.ReservaXml;
+import com.grupo4.libreria.proyectoaedficheros.model.ReservaXmlWrapper;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReservaXmlController {
 
   // ! Ruta del archivo XML de reservas
-  private static final String RUTA_XML = "src/main/java/org/reservas.xml";
+  private static final String RUTA_XML = 
+    "C:\\Users\\isaac\\IdeaProjects\\ProyectoFicheros-AED\\src\\main\\java\\com\\grupo4\\libreria\\proyectoaedficheros\\ficheros\\ReservasXml.xml";
 
   public static void main(String[] args) {
     // ? Espacio para pruebas
     getAllReservas();
+
+    // ReservaXml nuevaReserva = new ReservaXml(
+    //     "El resplandor",
+    //     "Isaac Ibañez",
+    //     LocalDate.of(2026, 2, 10),
+    //     LocalDate.of(2026, 2, 24));
+
+    // addReserva(nuevaReserva);
+
+    // updateReserva("El resplandor",
+    //     new ReservaXml(
+    //         "El resplandoraso", 
+    //         "Marco Ibañez", 
+    //         LocalDate.of(2026, 2, 10), 
+    //         LocalDate.of(2026, 2, 24)
+    //     )
+    // );
+
+    //! Por ahora borra por nombre, 
+    //! tengo que crear el delete por nombre de libro
+    // deleteReservaBySolicitante("Marco Ibañez");
+
+    // getAllReservas();
   }
 
   // * --- MÉTODOS AUXILIARES (PERSISTENCIA) --- *
@@ -33,11 +58,11 @@ public class ReservaXmlController {
     }
 
     try {
-      JAXBContext context = JAXBContext.newInstance(ReservaListWrapper.class);
+      JAXBContext context = JAXBContext.newInstance(ReservaXmlWrapper.class);
       Unmarshaller unmarshaller = context.createUnmarshaller();
 
       // Leemos el "contenedor"
-      ReservaListWrapper wrapper = (ReservaListWrapper) unmarshaller.unmarshal(file);
+      ReservaXmlWrapper wrapper = (ReservaXmlWrapper) unmarshaller.unmarshal(file);
       return (wrapper.getReservas() != null) ? wrapper.getReservas() : new ArrayList<>();
 
     } catch (Exception e) {
@@ -53,14 +78,14 @@ public class ReservaXmlController {
   private static void guardarListaReservas(List<ReservaXml> lista) {
     try {
       File file = new File(RUTA_XML);
-      JAXBContext context = JAXBContext.newInstance(ReservaListWrapper.class);
+      JAXBContext context = JAXBContext.newInstance(ReservaXmlWrapper.class);
       Marshaller marshaller = context.createMarshaller();
 
       // Configuración para que el XML sea legible (con saltos de línea)
       marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
       // Creamos el wrapper y le metemos la lista
-      ReservaListWrapper wrapper = new ReservaListWrapper();
+      ReservaXmlWrapper wrapper = new ReservaXmlWrapper();
       wrapper.setReservas(lista);
 
       // Guardamos el wrapper entero
@@ -71,7 +96,7 @@ public class ReservaXmlController {
     }
   }
 
-  // * --- MÉTODOS PÚBLICOS (CRUD) --- *
+  // * --- (CRUD) --- *
 
   // * Muestra todas las reservas del XML
   public static void getAllReservas() {

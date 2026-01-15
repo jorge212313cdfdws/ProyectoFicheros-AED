@@ -22,7 +22,7 @@ import java.lang.reflect.Type;
 public class ReservaJsonController {
 
 	// ! Configuración de GSON con adaptadores para LocalDate (imprescindible para
-	// Java 8+)
+	// ! Java 8+)
 	private static final Gson gson = new GsonBuilder()
 			.registerTypeAdapter(LocalDate.class,
 					(JsonSerializer<LocalDate>) (src, typeOfSrc, context) -> new JsonPrimitive(src.toString()))
@@ -32,11 +32,34 @@ public class ReservaJsonController {
 			.create();
 
 	// ! Ruta del archivo JSON de reservas
-	private static final String RUTA_ARCHIVO = "src/main/java/org/reservas.json";
+	private static final String RUTA_ARCHIVO = "C:\\Users\\isaac\\IdeaProjects\\ProyectoFicheros-AED\\src\\main\\java\\com\\grupo4\\libreria\\proyectoaedficheros\\ficheros\\ReservasJson.json";
 
 	public static void main(String[] args) {
 		// ? Espacio para pruebas de los métodos CRUD
 		getAllReservas();
+
+		// ReservaJson nuevaReserva = new ReservaJson(
+		// "El resplandor",
+		// "Isaac Ibañez",
+		// LocalDate.of(2026, 2, 10),
+		// LocalDate.of(2026, 2, 24));
+
+		// addReserva(nuevaReserva);
+
+		// updateReserva("El resplandor",
+		// new ReservaJson(
+		// "El resplandoraso",
+		// "Marco Ibañez",
+		// LocalDate.of(2026, 2, 10),
+		// LocalDate.of(2026, 2, 24)));
+
+		// getAllReservas();
+
+		// ! Por ahora borra por nombre,
+		// ! tengo que crear el delete por nombre de libro
+		// deleteReservaBySolicitante("Marco Ibañez");
+
+		// getAllReservas();
 	}
 
 	// * --- MÉTODOS AUXILIARES DE PERSISTENCIA --- *
@@ -76,7 +99,7 @@ public class ReservaJsonController {
 			lista.forEach(System.out::println);
 		}
 	}
-	
+
 	// * Método que imprime la reservas usando el nombre
 	public static ReservaJson getReservaBySolicitante(String nombre) {
 		List<ReservaJson> lista = obtenerListaReservas();

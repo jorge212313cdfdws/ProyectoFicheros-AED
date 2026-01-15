@@ -38,4 +38,12 @@ public class ReservaXml {
     @XmlJavaTypeAdapter(value = ReservaXmlAdapterDate.class) // Adaptador necesario
     public LocalDate getFechaDevolucion() { return fechaDevolucion; }
     public void setFechaDevolucion(LocalDate fechaDevolucion) { this.fechaDevolucion = fechaDevolucion; }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "XML_Node:\n  <reserva>\n    <titulo>%s</titulo>\n    <solicitante>%s</solicitante>\n    <periodo>%s hasta %s</periodo>\n  </reserva>",
+                tituloLibro, nombreSolicitante, fechaReserva, fechaDevolucion
+        );
+    }
 }

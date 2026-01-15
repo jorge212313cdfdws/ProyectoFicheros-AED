@@ -16,6 +16,12 @@ public class ReservaJson {
   LocalDate fechaDevolucion;
 
   /**
+   * Constructor por defecto requerido por GSON para instanciar objetos.
+   */
+  public ReservaJson() {
+  }
+
+  /**
    * Constructor completo para inicializar todos los campos de la reserva.
    */
   public ReservaJson(String tituloLibro, String nombreSolicitante, LocalDate fechaReserva, LocalDate fechaDevolucion) {
