@@ -232,7 +232,7 @@ public class VentanaPrincipal extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JTextField txtTitulo = new JTextField(reservaExistente != null ? reservaExistente.getTituloLibro() : "");
-        JTextField txtSolicitante = new JTextField(reservaExistente != null ? reservaExistente.getNombreSolicitante() : "");
+        JTextField txtSolicitante = new JTextField(reservaExistente != null ? reservaExistente.getNombreSolicitante() : "", 20);
         JTextField txtFechaReserva = new JTextField(reservaExistente != null ? reservaExistente.getFechaReserva().toString() : LocalDate.now().toString());
         JTextField txtFechaDevolucion = new JTextField(reservaExistente != null && reservaExistente.getFechaDevolucion() != null ? reservaExistente.getFechaDevolucion().toString() : "");
 
