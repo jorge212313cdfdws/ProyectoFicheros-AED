@@ -23,19 +23,16 @@ public class VentanaPrincipal extends JFrame {
     private JTable tablaReservas;
     private DefaultTableModel tableModel;
 
-    // DAOs
     private ReservaLibroDAOJson daoJson;
     private ReservaLibroDAOXml daoXml;
     private ReservaLibroDAOCsv daoCsv;
     private ReservaLibroDAOObj daoObj;
 
-    // Colores personalizados
     private final Color COLOR_FONDO = new Color(245, 245, 250);
     private final Color COLOR_PRIMARIO = new Color(60, 130, 200);
     private final Color COLOR_TEXTO_BLANCO = Color.WHITE;
 
     public VentanaPrincipal() {
-        // Intentar poner el LookAndFeel Nimbus
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -44,12 +41,10 @@ public class VentanaPrincipal extends JFrame {
                 }
             }
         } catch (Exception e) {
-            // Ignorar
         }
 
         gestor = new GestorReservas();
-        
-        // Inicializar DAOs
+
         daoJson = new ReservaLibroDAOJson();
         daoXml = new ReservaLibroDAOXml();
         daoCsv = new ReservaLibroDAOCsv();
@@ -63,20 +58,18 @@ public class VentanaPrincipal extends JFrame {
         setSize(900, 650);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        
+
         JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
         mainPanel.setBackground(COLOR_FONDO);
         mainPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
         setContentPane(mainPanel);
 
-        // --- TÍTULO ---
         JLabel lblTitulo = new JLabel("Listado de Reservas", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 24));
         lblTitulo.setForeground(new Color(50, 50, 50));
         lblTitulo.setBorder(new EmptyBorder(0, 0, 15, 0));
         mainPanel.add(lblTitulo, BorderLayout.NORTH);
 
-        // --- TABLA ---
         String[] columnNames = {"Título del Libro", "Solicitante", "Fecha Reserva", "Fecha Devolución"};
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
@@ -87,12 +80,11 @@ public class VentanaPrincipal extends JFrame {
 
         tablaReservas = new JTable(tableModel);
         estilizarTabla(tablaReservas);
-        
+
         JScrollPane scrollPane = new JScrollPane(tablaReservas);
         scrollPane.getViewport().setBackground(Color.WHITE);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
 
-        // --- BOTONES ---
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         panelBotones.setBackground(COLOR_FONDO);
 
@@ -110,7 +102,6 @@ public class VentanaPrincipal extends JFrame {
         panelBotones.add(btnEliminar);
         mainPanel.add(panelBotones, BorderLayout.SOUTH);
 
-        // --- MENÚ ---
         crearMenu();
     }
 
@@ -120,13 +111,13 @@ public class VentanaPrincipal extends JFrame {
         table.setSelectionBackground(new Color(200, 220, 240));
         table.setSelectionForeground(Color.BLACK);
         table.setGridColor(new Color(230, 230, 230));
-        
+
         JTableHeader header = table.getTableHeader();
         header.setFont(new Font("Segoe UI", Font.BOLD, 14));
         header.setBackground(COLOR_PRIMARIO);
         header.setForeground(COLOR_TEXTO_BLANCO);
         header.setOpaque(true);
-        
+
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 0; i < table.getColumnCount(); i++) {
@@ -150,9 +141,7 @@ public class VentanaPrincipal extends JFrame {
     private void crearMenu() {
         JMenuBar menuBar = new JMenuBar();
         JMenu menuArchivo = new JMenu("Archivo");
-        menuArchivo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 
-        // Submenú Cargar
         JMenu menuCargar = new JMenu("Cargar de...");
         JMenuItem itemCargarJson = new JMenuItem("JSON");
         JMenuItem itemCargarXml = new JMenuItem("XML");
@@ -169,7 +158,6 @@ public class VentanaPrincipal extends JFrame {
         menuCargar.add(itemCargarCsv);
         menuCargar.add(itemCargarObj);
 
-        // Submenú Guardar
         JMenu menuGuardar = new JMenu("Guardar en...");
         JMenuItem itemGuardarJson = new JMenuItem("JSON");
         JMenuItem itemGuardarXml = new JMenuItem("XML");
@@ -234,53 +222,58 @@ public class VentanaPrincipal extends JFrame {
         JDialog dialog = new JDialog(this, reservaExistente == null ? "Nueva Reserva" : "Editar Reserva", true);
         dialog.setSize(450, 350);
         dialog.setLocationRelativeTo(this);
-        
+
         JPanel panelForm = new JPanel(new GridBagLayout());
         panelForm.setBorder(new EmptyBorder(20, 20, 20, 20));
         panelForm.setBackground(Color.WHITE);
-        
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        
+
         JTextField txtTitulo = new JTextField(reservaExistente != null ? reservaExistente.getTituloLibro() : "");
         JTextField txtSolicitante = new JTextField(reservaExistente != null ? reservaExistente.getNombreSolicitante() : "");
         JTextField txtFechaReserva = new JTextField(reservaExistente != null ? reservaExistente.getFechaReserva().toString() : LocalDate.now().toString());
-        JTextField txtFechaDevolucion = new JTextField(reservaExistente != null ? reservaExistente.getFechaDevolucion().toString() : LocalDate.now().plusDays(7).toString());
+        JTextField txtFechaDevolucion = new JTextField(reservaExistente != null && reservaExistente.getFechaDevolucion() != null ? reservaExistente.getFechaDevolucion().toString() : "");
 
-        gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0.3;
+        gbc.gridx = 0; gbc.gridy = 0;
         panelForm.add(new JLabel("Título del Libro:"), gbc);
-        gbc.gridx = 1; gbc.weightx = 0.7;
+        gbc.gridx = 1;
         panelForm.add(txtTitulo, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 1; gbc.weightx = 0.3;
+        gbc.gridx = 0; gbc.gridy = 1;
         panelForm.add(new JLabel("Solicitante:"), gbc);
-        gbc.gridx = 1; gbc.weightx = 0.7;
+        gbc.gridx = 1;
         panelForm.add(txtSolicitante, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 2; gbc.weightx = 0.3;
+        gbc.gridx = 0; gbc.gridy = 2;
         panelForm.add(new JLabel("Fecha Reserva:"), gbc);
-        gbc.gridx = 1; gbc.weightx = 0.7;
+        gbc.gridx = 1;
         panelForm.add(txtFechaReserva, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 3; gbc.weightx = 0.3;
+        gbc.gridx = 0; gbc.gridy = 3;
         panelForm.add(new JLabel("Fecha Devolución:"), gbc);
-        gbc.gridx = 1; gbc.weightx = 0.7;
+        gbc.gridx = 1;
         panelForm.add(txtFechaDevolucion, gbc);
 
         JButton btnGuardar = crearBoton("Guardar");
         gbc.gridx = 0; gbc.gridy = 4; gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.NONE;
-        gbc.insets = new Insets(20, 10, 10, 10);
         panelForm.add(btnGuardar, gbc);
 
         btnGuardar.addActionListener(e -> {
             try {
                 String titulo = txtTitulo.getText();
                 String solicitante = txtSolicitante.getText();
-                LocalDate fechaRes = LocalDate.parse(txtFechaReserva.getText());
-                LocalDate fechaDev = LocalDate.parse(txtFechaDevolucion.getText());
+
+                LocalDate fechaRes = LocalDate.parse(txtFechaReserva.getText().trim());
+
+                LocalDate fechaDev = null;
+                String textoFechaDev = txtFechaDevolucion.getText().trim();
+                if (!textoFechaDev.isEmpty()) {
+                    fechaDev = LocalDate.parse(textoFechaDev);
+                }
 
                 ReservaLibro nuevaReserva = new ReservaLibro(titulo, solicitante, fechaRes, fechaDev);
 
@@ -315,7 +308,6 @@ public class VentanaPrincipal extends JFrame {
             JOptionPane.showMessageDialog(this, "Datos guardados correctamente en " + tipo + ".");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
         }
     }
 
@@ -328,7 +320,7 @@ public class VentanaPrincipal extends JFrame {
                 case "CSV": lista = daoCsv.cargar(); break;
                 case "OBJ": lista = daoObj.cargar(); break;
             }
-            
+
             if (lista != null) {
                 gestor.getReservas().clear();
                 gestor.getReservas().addAll(lista);
@@ -337,7 +329,6 @@ public class VentanaPrincipal extends JFrame {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al cargar: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
         }
     }
 }

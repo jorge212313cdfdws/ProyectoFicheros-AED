@@ -18,15 +18,12 @@ public class ReservaLibroDAOCsv {
 
     public void guardar(List<ReservaLibro> reservas) throws IOException {
         try (CSVWriter writer = new CSVWriter(new FileWriter(FICHERO_CSV))) {
-            // Cabecera opcional
-            // writer.writeNext(new String[]{"Titulo", "Solicitante", "FechaReserva", "FechaDevolucion"});
-
             for (ReservaLibro r : reservas) {
                 String[] datos = {
                         r.getTituloLibro(),
                         r.getNombreSolicitante(),
                         r.getFechaReserva().toString(),
-                        r.getFechaDevolucion().toString()
+                        r.getFechaDevolucion() != null ? r.getFechaDevolucion().toString() : ""
                 };
                 writer.writeNext(datos);
             }
@@ -35,7 +32,7 @@ public class ReservaLibroDAOCsv {
 
     public List<ReservaLibro> cargar() throws IOException, CsvValidationException {
         List<ReservaLibro> lista = new ArrayList<>();
-        
+
         try (CSVReader reader = new CSVReader(new FileReader(FICHERO_CSV))) {
             String[] linea;
             while ((linea = reader.readNext()) != null) {
@@ -43,13 +40,12 @@ public class ReservaLibroDAOCsv {
                     String titulo = linea[0];
                     String solicitante = linea[1];
                     LocalDate fechaRes = LocalDate.parse(linea[2]);
-                    LocalDate fechaDev = LocalDate.parse(linea[3]);
-                    
+                    LocalDate fechaDev = linea[3].isBlank() ? null : LocalDate.parse(linea[3]);
+
                     lista.add(new ReservaLibro(titulo, solicitante, fechaRes, fechaDev));
                 }
             }
         } catch (IOException e) {
-            // Si el fichero no existe, devolvemos lista vacía
             return new ArrayList<>();
         }
         return lista;
