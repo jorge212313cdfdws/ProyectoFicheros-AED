@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<reservas>
+    <reserva>
+        <tituloLibro>El Quijote</tituloLibro>
+        <nombreSolicitante>Isaac</nombreSolicitante>
+        <fechaReserva>2026-01-15</fechaReserva>
+        <fechaDevolucion>2026-01-30</fechaDevolucion>
+    </reserva>
+    <reserva>
+        <tituloLibro>Cien años de soledad</tituloLibro>
+        <nombreSolicitante>Enrique</nombreSolicitante>
+        <fechaReserva>2026-02-01</fechaReserva>
+        <fechaDevolucion>2026-02-15</fechaDevolucion>
+    </reserva>
+</reservas>

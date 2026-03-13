@@ -1,14 +1,8 @@
 [
   {
-    "tituloLibro": "1984",
-    "nombreSolicitante": "Juan López",
-    "fechaReserva": "2026-01-13",
-    "fechaDevolucion": "2026-01-20"
-  },
-  {
-    "tituloLibro": "El Hobbit",
-    "nombreSolicitante": "María García",
-    "fechaReserva": "2026-01-13",
-    "fechaDevolucion": "2026-01-23"
+    "tituloLibro": "Quijote",
+    "nombreSolicitante": "manu",
+    "fechaReserva": "2026-01-15",
+    "fechaDevolucion": "2026-01-22"
   }
 ]

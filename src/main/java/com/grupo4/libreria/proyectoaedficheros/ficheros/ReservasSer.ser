@@ -1,0 +1,9 @@
+class Persona implements Serializable {
+    String nombre;
+    int edad;
+
+    Persona(String n, int e) {
+        nombre = n;
+        edad = e;
+    }
+}
